@@ -7,7 +7,6 @@ vim.opt.mouse = 'a' --default: 'a'
 vim.opt.relativenumber = true --default: false
 vim.opt.wrap = true --default: false display lines as one long line
 
-
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
 lvim.colorscheme = "lunar"
@@ -18,8 +17,8 @@ lvim.colorscheme = "lunar"
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+lvim.keys.normal_mode["<S-l>"] = ":CybuNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":CybuPrev<CR>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -57,7 +56,9 @@ lvim.builtin.terminal.execs = {
 lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope fd<CR>", "Find Files" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>NvimTreeFocus<CR>", "Focus Explorer" }
 lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
+  name = "+Trouble/Todo",
+  a = { "<cmd>TodoTrouble<cr>", "All Todos in Project" },
+  s = { "<cmd>TodoTelescope<cr>", "TodoTelescope all Projects" },
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
@@ -168,6 +169,33 @@ linters.setup {
 
 -- Additional Plugins
 lvim.plugins = {
+  "p00f/nvim-ts-rainbow", -- Rainbow parentheses for neovim using tree-sitter.
+  "karb94/neoscroll.nvim", -- a smooth scrolling neovim plugin written in lua
+  "kylechui/nvim-surround", -- Add/change/delete surrounding delimiter pairs with ease
+  "MattesGroeger/vim-bookmarks", -- This vim plugin allows toggling bookmarks per line
+  "ghillb/cybu.nvim", -- Neovim plugin that offers context when cycling buffers in the form of a customizable notification window.
+  "moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
+  "windwp/nvim-spectre", -- search by rg and replace by sed
+  "f-person/git-blame.nvim", -- git blame
+  "folke/zen-mode.nvim", -- Distraction-free coding
+  "lvimuser/lsp-inlayhints.nvim", -- Partial implementation of LSP inlay hint.
+  "kevinhwang91/nvim-bqf", -- The goal of nvim-bqf is to make Neovim's quickfix window better.
+  "hrsh7th/cmp-emoji", -- nvim-cmp source for emojis.
+  -- Leap is a general-purpose motion plugin for Neovim,
+  -- with the ultimate goal of establishing a new standard interface for
+  -- moving around in the visible area in Vim-like modal editors.
+  "ggandor/leap.nvim",
+  "nacro90/numb.nvim", -- numb.nvim is a Neovim plugin that peeks lines of the buffer in non-obtrusive way.
+  "sindrets/diffview.nvim", -- Single tabpage interface for easily cycling through diffs for all modified files for any git rev.
+  {
+    "jinh0/eyeliner.nvim", -- Move faster with unique f/F indicators for each word on the line.
+    config = function()
+      require("eyeliner").setup {
+        highlight_on_key = true,
+      }
+    end,
+  },
+  "LukasPietzschmann/telescope-tabs", -- Fly through your tabs in neovim ✈️
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -197,6 +225,8 @@ lvim.plugins = {
   },
 }
 
+reload "user.neoscroll"
+reload "user.cybu"
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
