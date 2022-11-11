@@ -6,6 +6,7 @@ vim.opt.foldmethod = 'manual'
 vim.opt.mouse = 'a' --default: 'a'
 vim.opt.relativenumber = true --default: false
 vim.opt.wrap = true --default: false display lines as one long line
+vim.opt.iskeyword:append("-")
 
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
@@ -46,11 +47,11 @@ lvim.keys.normal_mode["<S-h>"] = ":CybuPrev<CR>"
 -- lvim.builtin.theme.options.dim_inactive = true
 -- lvim.builtin.theme.options.style = "storm"
 
-lvim.builtin.terminal.execs = {
-      { vim.o.shell, "<M-1>", "Horizontal Terminal", "horizontal", 0.3 },
-      { vim.o.shell, "<M-2>", "Vertical Terminal", "vertical", 0.4 },
-      { vim.o.shell, "<C-'>", "Float Terminal", "float", nil },
-    }
+-- lvim.builtin.terminal.execs = {
+--       { vim.o.shell, "<M-1>", "Horizontal Terminal", "horizontal", 0.3 },
+--       { vim.o.shell, "<M-2>", "Vertical Terminal", "vertical", 0.4 },
+--       { vim.o.shell, "<C-'>", "Float Terminal", "float", nil },
+--     }
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope fd<CR>", "Find Files" }
@@ -169,9 +170,18 @@ linters.setup {
 
 -- Additional Plugins
 lvim.plugins = {
+  -- NOTE: works with colorscheme "lunar" only set in "user.treesitter"
   "p00f/nvim-ts-rainbow", -- Rainbow parentheses for neovim using tree-sitter.
+
+  -- NOTE: mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
   "karb94/neoscroll.nvim", -- a smooth scrolling neovim plugin written in lua
+
+  -- NOTE: mappings s{motion}{char}, ss{char} (cursor), SS{char} (line)
   "kylechui/nvim-surround", -- Add/change/delete surrounding delimiter pairs with ease
+
+  -- NOTE: used in "user.treesitter" in combination of "p00f/nvim-ts-rainbow"
+  "lunarvim/darkplus.nvim",
+
   "MattesGroeger/vim-bookmarks", -- This vim plugin allows toggling bookmarks per line
   "ghillb/cybu.nvim", -- Neovim plugin that offers context when cycling buffers in the form of a customizable notification window.
   "moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
@@ -181,6 +191,8 @@ lvim.plugins = {
   "lvimuser/lsp-inlayhints.nvim", -- Partial implementation of LSP inlay hint.
   "kevinhwang91/nvim-bqf", -- The goal of nvim-bqf is to make Neovim's quickfix window better.
   "hrsh7th/cmp-emoji", -- nvim-cmp source for emojis.
+  -- in instert mode type : and collection of emojis pop up
+
   -- Leap is a general-purpose motion plugin for Neovim,
   -- with the ultimate goal of establishing a new standard interface for
   -- moving around in the visible area in Vim-like modal editors.
@@ -223,10 +235,26 @@ lvim.plugins = {
       })
     end,
   },
+  {
+    -- NOTE: mappings: " in normal mode, c-r in insert mode
+    "tversteeg/registers.nvim", -- Show register content when you try to access it in Neovim. Written in Lua.
+    config = function()
+      require("registers").setup()
+    end,
+  },
 }
 
 reload "user.neoscroll"
 reload "user.cybu"
+reload "user.surround"
+reload "user.bookmark"
+reload "user.zen-mode"
+reload "user.inlay-hints"
+-- reload "user.whichkey"
+reload "user.telescope"
+reload "user.bqf"
+reload "user.numb"
+reload "user.treesitter"
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
