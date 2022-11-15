@@ -43,6 +43,7 @@ lvim.keys.normal_mode["<S-h>"] = ":CybuPrev<CR>"
 --   },
 -- }
 
+-- Change theme settings
 lvim.builtin.indentlines = {
   active = true,
   on_config_done = nil,
@@ -66,7 +67,7 @@ lvim.builtin.indentlines = {
     show_current_context = true,
   },
 }
--- Change theme settings
+
 -- lvim.builtin.theme.options.dim_inactive = true
 -- lvim.builtin.theme.options.style = "storm"
 
@@ -302,6 +303,12 @@ reload "user.bqf"
 reload "user.numb"
 reload "user.treesitter"
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
+-- NOTE: improved highlight matching parens (brackets, braces etc.) by bright background color
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = { "*" },
+  -- based on :hi lualine_a_command
+  command = "highlight MatchParen guifg=#16161e guibg=#e0af68",
+})
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
 --   -- enable wrap mode for json files only
