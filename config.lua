@@ -90,6 +90,7 @@ lvim.builtin.which_key.mappings["o"] = { "<cmd>NvimTreeFocus<CR>", "Focus Explor
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble/Todo",
   a = { "<cmd>TodoTrouble<cr>", "All Todos in Project" },
+  t = { "<cmd>%substitute/\\v\\s+$//eg<cr>", "Trim Trailing Whitespace" },
   s = { "<cmd>TodoTelescope<cr>", "TodoTelescope all Projects" },
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
@@ -289,6 +290,18 @@ lvim.plugins = {
       require("registers").setup()
     end,
   },
+  -- NOTE: highlight trailing whitespace
+  {
+    "johnfrankmorgan/whitespace.nvim",
+    config = function ()
+      require("whitespace-nvim").setup({
+        highlight = "Cursor",
+        ignored_filetypes = { "TelescopePrompt", "Trouble", "help" },
+      })
+      -- remove trailing whitespace with a keybinding
+      -- vim.keymap.set('n', '<Leader>t', require('whitespace-nvim').trim)
+    end
+  }
 }
 
 reload "user.neoscroll"
@@ -308,6 +321,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = { "*" },
   -- based on :hi lualine_a_command
   command = "highlight MatchParen guifg=#16161e guibg=#e0af68",
+})
+-- NOTE: trim trailing whitespace on save
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%substitute/\s\+$//e]],
 })
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
