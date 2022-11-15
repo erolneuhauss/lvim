@@ -79,11 +79,12 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
+  "hcl", -- Terraform (HashiCorp Configuration Language)
+  "java",
   "javascript",
   "json",
   "lua",
   "python",
-  "java",
   "yaml",
 }
 
@@ -94,10 +95,19 @@ lvim.builtin.treesitter.highlight.enable = true
 
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 lvim.lsp.installer.setup.ensure_installed = {
-    "sumneko_lua",
-    "jsonls",
-    "tflint",
+  -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  "ansiblels",
+  "bashls",
+  "jsonls",
+  "markdownlint",
+  "marksman",
+  "sumneko_lua",
+  "terraformls",
+  "texlab",
+  "tflint",
+  "yamlls",
 }
+
 -- -- change UI setting of `LspInstallInfo`
 -- -- see <https://github.com/williamboman/nvim-lsp-installer#default-configuration>
 -- lvim.lsp.installer.setup.ui.check_outdated_servers_on_open = false
@@ -108,7 +118,7 @@ lvim.lsp.installer.setup.ensure_installed = {
 -- }
 
 -- ---@usage disable automatic installation of servers
-lvim.lsp.installer.setup.automatic_installation = false
+lvim.lsp.installer.setup.automatic_installation = true
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
@@ -116,11 +126,12 @@ lvim.lsp.installer.setup.automatic_installation = false
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
--- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
--- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "tflint"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
+-- ---remove a server from the skipped list, e.g. eslint, or emmet_ls.
+-- WARN: !!Requires `:LvimCacheReset` to take effect!!
+-- :LvimInfo` lists which server(s) are skipped for the current filetype
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+  return server ~= "tflint"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
