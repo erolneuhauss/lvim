@@ -43,6 +43,29 @@ lvim.keys.normal_mode["<S-h>"] = ":CybuPrev<CR>"
 --   },
 -- }
 
+lvim.builtin.indentlines = {
+  active = true,
+  on_config_done = nil,
+  options = {
+    enabled = true,
+    buftype_exclude = { "terminal", "nofile" },
+    filetype_exclude = {
+      "help",
+      "startify",
+      "dashboard",
+      "packer",
+      "neogitstatus",
+      "NvimTree",
+      "Trouble",
+      "text",
+    },
+    char = lvim.icons.ui.LineLeft,
+    show_trailing_blankline_indent = false,
+    show_first_indent_level = true,
+    use_treesitter = true,
+    show_current_context = true,
+  },
+}
 -- Change theme settings
 -- lvim.builtin.theme.options.dim_inactive = true
 -- lvim.builtin.theme.options.style = "storm"
@@ -54,6 +77,13 @@ lvim.keys.normal_mode["<S-h>"] = ":CybuPrev<CR>"
 --     }
 
 -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["r"] = {
+  name = "Replace",
+  r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
+  w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
+  f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
+}
+
 lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope fd<CR>", "Find Files" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>NvimTreeFocus<CR>", "Focus Explorer" }
 lvim.builtin.which_key.mappings["t"] = {
@@ -99,7 +129,6 @@ lvim.lsp.installer.setup.ensure_installed = {
   "ansiblels",
   "bashls",
   "jsonls",
-  "markdownlint",
   "marksman",
   "sumneko_lua",
   "terraformls",
@@ -165,18 +194,18 @@ linters.setup {
   { command = "flake8", filetypes = { "python" } },
   { command = "shellcheck", filetypes = { "sh" } },
   { command = "markdownlint", filetypes = { "markdown" } },
---   {
---     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "shellcheck",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--severity", "warning" },
---   },
---   {
---     command = "codespell",
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "javascript", "python" },
---   },
+  --   {
+  --     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+  --     command = "shellcheck",
+  --     ---@usage arguments to pass to the formatter
+  --     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+  --     extra_args = { "--severity", "warning" },
+  --   },
+  --   {
+  --     command = "codespell",
+  --     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+  --     filetypes = { "javascript", "python" },
+  --   },
 }
 
 -- Additional Plugins
@@ -184,7 +213,7 @@ lvim.plugins = {
   -- NOTE: works with colorscheme "lunar" only set in "user.treesitter"
   "p00f/nvim-ts-rainbow", -- Rainbow parentheses for neovim using tree-sitter.
 
-  -- NOTE: mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+  -- NOTE: mappings "C-j" "C-k" "<C-u>" "<C-d>" "<C-b>" "<C-f>" "<C-y>" "<C-e>" "zt", "zz", "zb"
   "karb94/neoscroll.nvim", -- a smooth scrolling neovim plugin written in lua
 
   -- NOTE: mappings s{motion}{char}, ss{char} (cursor), SS{char} (line)
@@ -193,8 +222,11 @@ lvim.plugins = {
   -- NOTE: used in "user.treesitter" in combination of "p00f/nvim-ts-rainbow"
   "lunarvim/darkplus.nvim",
 
+  -- NOTE: mappings leader-key "m"
   "MattesGroeger/vim-bookmarks", -- This vim plugin allows toggling bookmarks per line
+
   "ghillb/cybu.nvim", -- Neovim plugin that offers context when cycling buffers in the form of a customizable notification window.
+  -- WARN: Not sure, if this is truly beneficial. Did not see an effect
   "moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
   "windwp/nvim-spectre", -- search by rg and replace by sed
   "f-person/git-blame.nvim", -- git blame
@@ -211,10 +243,13 @@ lvim.plugins = {
   "nacro90/numb.nvim", -- numb.nvim is a Neovim plugin that peeks lines of the buffer in non-obtrusive way.
   "sindrets/diffview.nvim", -- Single tabpage interface for easily cycling through diffs for all modified files for any git rev.
   {
+    -- NOTE: mappings: f/F (;)
+    -- Magenta letters indicate unique letter to jump with f/F
+    -- Blue letters indicates non unique letter to jump with f/F followed by ;
     "jinh0/eyeliner.nvim", -- Move faster with unique f/F indicators for each word on the line.
     config = function()
       require("eyeliner").setup {
-        highlight_on_key = true,
+        highlight_on_key = false,
       }
     end,
   },
@@ -223,7 +258,7 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
-  -- BUG: requires latexmk on local host. My LaTeX is dockerized 
+  -- BUG: requires latexmk on local host. My LaTeX is dockerized
   -- { "lervag/vimtex" },
   {
     "folke/todo-comments.nvim",
