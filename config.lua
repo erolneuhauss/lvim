@@ -227,21 +227,35 @@ lvim.plugins = {
   -- NOTE: mappings leader-key "m"
   "MattesGroeger/vim-bookmarks", -- This vim plugin allows toggling bookmarks per line
 
+  -- NOTE: switch between buffer you usually do and use TAB with arrow keys to move around
   "ghillb/cybu.nvim", -- Neovim plugin that offers context when cycling buffers in the form of a customizable notification window.
-  -- WARN: Not sure, if this is truly beneficial. Did not see an effect
+
+  -- WARN: Not sure, if this is truly beneficial. Did not see any effect
   "moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
+
+  -- WARN: This behaves somewhat buggy I think. Did not really grap the benefit besides Telescope changes
   "windwp/nvim-spectre", -- search by rg and replace by sed
+
   "f-person/git-blame.nvim", -- git blame
+
+  -- NOTE: removes status line a centers text in the middle
   "folke/zen-mode.nvim", -- Distraction-free coding
-  "lvimuser/lsp-inlayhints.nvim", -- Partial implementation of LSP inlay hint.
+
+  -- NOTE: Decided not to use it. Usefulness questionable: https://alpha2phi.medium.com/neovim-for-beginners-lsp-inlay-hints-bf4a8afa6f27
+  -- "lvimuser/lsp-inlayhints.nvim", -- Partial implementation of LSP inlay hint.
+
+  -- NOTE: I do not use quickfix, yet. Maybe of use https://github.com/kevinhwang91/nvim-bqf#function-table
   "kevinhwang91/nvim-bqf", -- The goal of nvim-bqf is to make Neovim's quickfix window better.
+
+  -- NOTE: in instert mode type : and collection of emojis pop up
   "hrsh7th/cmp-emoji", -- nvim-cmp source for emojis.
-  -- in instert mode type : and collection of emojis pop up
 
   -- Leap is a general-purpose motion plugin for Neovim,
   -- with the ultimate goal of establishing a new standard interface for
   -- moving around in the visible area in Vim-like modal editors.
-  "ggandor/leap.nvim",
+  -- BUG: needs configuration https://github.com/ggandor/leap.nvim#getting-started
+  -- "ggandor/leap.nvim",
+
   "nacro90/numb.nvim", -- numb.nvim is a Neovim plugin that peeks lines of the buffer in non-obtrusive way.
   "sindrets/diffview.nvim", -- Single tabpage interface for easily cycling through diffs for all modified files for any git rev.
   {
