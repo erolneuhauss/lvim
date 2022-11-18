@@ -296,7 +296,24 @@ lvim.plugins = {
     config = function ()
       require("whitespace-nvim").setup({
         highlight = "Cursor",
-        ignored_filetypes = { "TelescopePrompt", "Trouble", "help" },
+        ignored_filetypes = {
+  -- BUG: 'space-;' (dashboard) still shows whitespaces
+          "DressingInput",
+          "DressingSelect",
+          "NvimTree",
+          "Outline",
+          "TelescopePrompt",
+          "Trouble",
+          "alpha",
+          "dashboard",
+          "help",
+          "lir",
+          "neogitstatus",
+          "packer",
+          "spectre_panel",
+          "startify",
+          "toggleterm",
+        },
       })
       -- remove trailing whitespace with a keybinding
       -- vim.keymap.set('n', '<Leader>t', require('whitespace-nvim').trim)
