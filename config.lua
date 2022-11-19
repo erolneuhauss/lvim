@@ -256,7 +256,11 @@ lvim.plugins = {
   -- BUG: needs configuration https://github.com/ggandor/leap.nvim#getting-started
   -- "ggandor/leap.nvim",
 
+  -- NOTE: Peeking the buffer while entering command :{number}
   "nacro90/numb.nvim", -- numb.nvim is a Neovim plugin that peeks lines of the buffer in non-obtrusive way.
+
+  -- NOTE: e.g. :DiffviewFileHistory % -- show in diff view file history of current file
+  -- usage: https://github.com/sindrets/diffview.nvim#usage
   "sindrets/diffview.nvim", -- Single tabpage interface for easily cycling through diffs for all modified files for any git rev.
   {
     -- NOTE: mappings: f/F (;)
@@ -269,7 +273,8 @@ lvim.plugins = {
       }
     end,
   },
-  "LukasPietzschmann/telescope-tabs", -- Fly through your tabs in neovim ✈️
+  -- BUG: This does not seem to work. And I am not using tabs anyway
+  -- "LukasPietzschmann/telescope-tabs", -- Fly through your tabs in neovim ✈️
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -304,6 +309,19 @@ lvim.plugins = {
       require("registers").setup()
     end,
   },
+  {
+    -- NOTE: use :YankyRingHistory
+    -- TODO: integrate it with Telescope: https://github.com/gbprod/yanky.nvim#%EF%B8%8F-configuration-2
+    "gbprod/yanky.nvim", -- Show register content when you try to access it in Neovim. Written in Lua.
+    config = function()
+      require("yanky").setup()
+      vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+    end,
+  },
+
   -- NOTE: highlight trailing whitespace
   {
     "johnfrankmorgan/whitespace.nvim",
@@ -323,6 +341,7 @@ lvim.plugins = {
           "help",
           "lir",
           "neogitstatus",
+          "nofile",
           "packer",
           "spectre_panel",
           "startify",
