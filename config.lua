@@ -216,7 +216,7 @@ lvim.plugins = {
   "karb94/neoscroll.nvim", -- a smooth scrolling neovim plugin written in lua
 
   -- NOTE: mappings s{motion}{char}, ss{char} (cursor), SS{char} (line)
-  "kylechui/nvim-surround", -- Add/change/delete surrounding delimiter pairs with ease
+  -- "kylechui/nvim-surround", -- Add/change/delete surrounding delimiter pairs with ease
 
   -- NOTE: used in "user.treesitter" in combination of "p00f/nvim-ts-rainbow"
   "lunarvim/darkplus.nvim",
@@ -247,11 +247,12 @@ lvim.plugins = {
   -- NOTE: in instert mode type : and collection of emojis pop up
   "hrsh7th/cmp-emoji", -- nvim-cmp source for emojis.
 
-  -- Leap is a general-purpose motion plugin for Neovim,
-  -- with the ultimate goal of establishing a new standard interface for
-  -- moving around in the visible area in Vim-like modal editors.
-  -- BUG: needs configuration https://github.com/ggandor/leap.nvim#getting-started
-  -- "ggandor/leap.nvim",
+  -- Leap is a general-purpose motion plugin for Neovim
+  -- NOTE: https://github.com/ggandor/leap.nvim/#how-to-use-it-tldr
+  {
+    "ggandor/leap.nvim",
+      require('leap').add_default_mappings()
+  },
 
   -- NOTE: Peeking the buffer while entering command :{number}
   "nacro90/numb.nvim", -- numb.nvim is a Neovim plugin that peeks lines of the buffer in non-obtrusive way.
@@ -366,7 +367,7 @@ lvim.plugins = {
 
 reload "user.neoscroll"
 reload "user.cybu"
-reload "user.surround"
+-- reload "user.surround"
 reload "user.bookmark"
 reload "user.zen-mode"
 reload "user.inlay-hints"
