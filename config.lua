@@ -74,12 +74,6 @@ lvim.builtin.indentlines = {
 -- lvim.builtin.theme.options.dim_inactive = true
 -- lvim.builtin.theme.options.style = "storm"
 
--- lvim.builtin.terminal.execs = {
---       { vim.o.shell, "<M-1>", "Horizontal Terminal", "horizontal", 0.3 },
---       { vim.o.shell, "<M-2>", "Vertical Terminal", "vertical", 0.4 },
---       { vim.o.shell, "<C-'>", "Float Terminal", "float", nil },
---     }
-
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["r"] = {
   name = "Replace",
@@ -268,7 +262,7 @@ lvim.plugins = {
   {
     -- NOTE: mappings: f/F (;)
     -- Magenta letters indicate unique letter to jump with f/F
-    -- Blue letters indicates non unique letter to jump with f/F followed by ;
+    -- Blue letters indicates non unique letter to jump with f/F followed by;
     "jinh0/eyeliner.nvim", -- Move faster with unique f/F indicators for each word on the line.
     config = function()
       require("eyeliner").setup {
@@ -333,22 +327,35 @@ lvim.plugins = {
         highlight = "Cursor",
         ignored_filetypes = {
   -- BUG: 'space-;' (dashboard) still shows whitespaces
+          "",
           "DressingInput",
           "DressingSelect",
+          "Jaq",
           "NvimTree",
           "Outline",
           "TelescopePrompt",
           "Trouble",
           "alpha",
+          "dap-repl",
+          "dap-terminal",
+          "dapui_console",
           "dashboard",
+          "dirvish",
+          "fugitive",
+          "harpoon",
           "help",
+          "lab",
           "lir",
+          "neo-tree",
           "neogitstatus",
           "nofile",
+          "noice",
+          "notify",
           "packer",
           "spectre_panel",
           "startify",
           "toggleterm",
+          "text",
         },
       })
       -- remove trailing whitespace with a keybinding
