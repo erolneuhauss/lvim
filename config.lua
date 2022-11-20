@@ -85,16 +85,18 @@ lvim.builtin.which_key.mappings["r"] = {
 lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope fd<CR>", "Find Files" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>NvimTreeFocus<CR>", "Focus Explorer" }
 lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble/Todo",
+  name = "Todo and Tabs",
+  t = {
+    "<cmd>lua require('telescope').extensions['telescope-tabs'].list_tabs(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal', prompt_title='Tabs'})<cr>",
+    "Find Tab",
+  },
+  n = { "<cmd>tabnew %<cr>", "New Tab" },
+  c = { "<cmd>tabclose<cr>", "Close Tab" },
+  o = { "<cmd>tabonly<cr>", "Only Tab" },
+
   a = { "<cmd>TodoTrouble<cr>", "All Todos in Project" },
-  t = { "<cmd>%substitute/\\v\\s+$//eg<cr>", "Trim Trailing Whitespace" },
-  s = { "<cmd>TodoTelescope<cr>", "TodoTelescope all Projects" },
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+  r = { "<cmd>%substitute/\\v\\s+$//eg<cr>", "Trim Trailing Whitespace" },
+  p = { "<cmd>TodoTelescope<cr>", "TodoTelescope all Projects" },
 }
 
 -- TODO: User Config for predefined plugins
@@ -272,8 +274,8 @@ lvim.plugins = {
       }
     end,
   },
-  -- BUG: This does not seem to work. And I am not using tabs anyway
-  -- "LukasPietzschmann/telescope-tabs", -- Fly through your tabs in neovim ✈️
+  -- https://github.com/LukasPietzschmann/telescope-tabs
+  "LukasPietzschmann/telescope-tabs", -- Fly through your tabs in neovim ✈️
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
