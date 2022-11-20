@@ -3,14 +3,17 @@
 -- general
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- treesitter based folding
 vim.opt.foldmethod = 'manual'
+-- NOTE: adjustment for neovide
+vim.opt.guifont = {"Hack Nerd Font", ":h20"}
+vim.opt.iskeyword:append("-")
 vim.opt.mouse = 'a' --default: 'a'
 vim.opt.relativenumber = true --default: false
 vim.opt.wrap = true --default: false display lines as one long line
-vim.opt.iskeyword:append("-")
 
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
-lvim.colorscheme = "lunar"
+-- BUG: with "lunar". lazygit defaulted to default dark in neovide and colors where bad
+lvim.colorscheme = "tokyonight-night"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
