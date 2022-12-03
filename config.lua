@@ -1,28 +1,49 @@
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
+--[[
+ THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
+ `lvim` is the global options object
+]]
 
--- general
+-- vim options
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- treesitter based folding
 vim.opt.foldmethod = 'manual'
 -- NOTE: adjustment for neovide
-vim.opt.guifont = {"Hack Nerd Font", ":h20"}
+vim.opt.guifont = { "Hack Nerd Font", ":h20" }
 vim.opt.iskeyword:append("-")
 vim.opt.mouse = 'a' --default: 'a'
 vim.opt.relativenumber = true --default: false
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 vim.opt.wrap = true --default: false display lines as one long line
 
-lvim.log.level = "warn"
-lvim.format_on_save.enabled = false
--- BUG: with "lunar". lazygit defaulted to default dark in neovide and colors where bad
-lvim.colorscheme = "tokyonight-night"
+-- general
+lvim.log.level = "info"
+lvim.format_on_save = {
+  enabled = true,
+  pattern = "*.lua",
+  timeout = 1000,
+}
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
+-- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+-- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+-- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<S-l>"] = ":CybuNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":CybuPrev<CR>"
+
+-- -- Use which-key to add extra bindings with the leader-key prefix
+-- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+-- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+
+-- -- Change theme settings
+-- lvim.colorscheme = "lunar"
+-- BUG: with "lunar". lazygit defaulted to default dark in neovide and colors where bad
+lvim.colorscheme = "tokyonight-night"
+
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -108,6 +129,8 @@ lvim.builtin.terminal.direction = "tab"
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 
+-- Automatically install missing parsers when entering buffer
+lvim.builtin.treesitter.auto_install = true
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -151,8 +174,8 @@ lvim.lsp.installer.setup.ensure_installed = {
 -- ---@usage disable automatic installation of servers
 lvim.lsp.installer.setup.automatic_installation = true
 
--- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
--- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
+-- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
+-- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
@@ -175,8 +198,10 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 -- end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
+-- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 -- local formatters = require "lvim.lsp.null-ls.formatters"
 -- formatters.setup {
+--   { command = "stylua" },
 --   { command = "black", filetypes = { "python" } },
 --   { command = "isort", filetypes = { "python" } },
 --   {
@@ -254,7 +279,7 @@ lvim.plugins = {
   -- NOTE: https://github.com/ggandor/leap.nvim/#how-to-use-it-tldr
   {
     "ggandor/leap.nvim",
-      require('leap').add_default_mappings()
+    require('leap').add_default_mappings()
   },
 
   -- NOTE: Peeking the buffer while entering command :{number}
@@ -316,21 +341,21 @@ lvim.plugins = {
     "gbprod/yanky.nvim", -- Show register content when you try to access it in Neovim. Written in Lua.
     config = function()
       require("yanky").setup()
-      vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
-      vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
-      vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
-      vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
     end,
   },
 
   -- NOTE: highlight trailing whitespace
   {
     "johnfrankmorgan/whitespace.nvim",
-    config = function ()
+    config = function()
       require("whitespace-nvim").setup({
         highlight = "Cursor",
         ignored_filetypes = {
-  -- BUG: 'space-;' (dashboard) still shows whitespaces
+          -- BUG: 'space-;' (dashboard) still shows whitespaces
           "",
           "DressingInput",
           "DressingSelect",
