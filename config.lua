@@ -155,11 +155,11 @@ lvim.lsp.installer.setup.ensure_installed = {
   "bashls",
   "jsonls",
   "marksman",
-  "sumneko_lua",
+  -- "sumneko_lua",
   "terraformls",
   "texlab",
   "tflint",
-  "yamlls",
+  -- "yamlls",
 }
 
 -- -- change UI setting of `LspInstallInfo`
@@ -277,10 +277,10 @@ lvim.plugins = {
 
   -- Leap is a general-purpose motion plugin for Neovim
   -- NOTE: https://github.com/ggandor/leap.nvim/#how-to-use-it-tldr
-  {
-    "ggandor/leap.nvim",
-    require('leap').add_default_mappings()
-  },
+  -- {
+  --   "ggandor/leap.nvim",
+  --   require('leap').add_default_mappings()
+  -- },
 
   -- NOTE: Peeking the buffer while entering command :{number}
   "nacro90/numb.nvim", -- numb.nvim is a Neovim plugin that peeks lines of the buffer in non-obtrusive way.
