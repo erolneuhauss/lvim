@@ -2,14 +2,17 @@
  THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
  `lvim` is the global options object
 ]]
+--
+-- NOTE: adjustment for neovide
+if vim.g.neovide then
+  vim.opt.guifont = { "Hack Nerd Font", ":h20" }
+end
 
 -- vim options
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- treesitter based folding
 vim.opt.foldmethod = 'manual'
--- NOTE: adjustment for neovide
-vim.opt.guifont = { "Hack Nerd Font", ":h20" }
 vim.opt.iskeyword:append("-")
-vim.opt.mouse = 'a' --default: 'a'
+vim.opt.mouse = 'a'           --default: 'a'
 vim.opt.relativenumber = true --default: false
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -219,8 +222,8 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 -- -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "flake8", filetypes = { "python" } },
-  { command = "shellcheck", filetypes = { "sh" } },
+  { command = "flake8",       filetypes = { "python" } },
+  { command = "shellcheck",   filetypes = { "sh" } },
   { command = "markdownlint", filetypes = { "markdown" } },
   --   {
   --     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
@@ -260,7 +263,7 @@ lvim.plugins = {
   "moll/vim-bbye", -- Bbye allows you to do delete buffers (close files) without closing your windows or messing up your layout.
 
   -- WARN: This behaves somewhat buggy I think. Did not really grap the benefit besides Telescope changes
-  "windwp/nvim-spectre", -- search by rg and replace by sed
+  "windwp/nvim-spectre",     -- search by rg and replace by sed
 
   "f-person/git-blame.nvim", -- git blame
 
