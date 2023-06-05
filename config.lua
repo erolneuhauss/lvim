@@ -156,11 +156,11 @@ lvim.lsp.installer.setup.ensure_installed = {
   "bashls",
   "jsonls",
   "marksman",
-  -- "sumneko_lua",
+  "lua_ls",
   "terraformls",
   "texlab",
   "tflint",
-  -- "yamlls",
+  "yamlls",
 }
 
 -- -- change UI setting of `LspInstallInfo`
