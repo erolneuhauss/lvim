@@ -5,14 +5,28 @@
 --
 -- NOTE: adjustment for neovide
 if vim.g.neovide then
-  vim.opt.guifont = { "Hack Nerd Font", ":h20" }
+  vim.opt.guifont = { "Hack Nerd Font", ":h22" }
+  -- Allow clipboard copy paste in neovim
+  vim.keymap.set('n', '<D-s>', ':w<CR>')      -- Save
+  vim.keymap.set('v', '<D-c>', '"+y')         -- Copy
+  vim.keymap.set('n', '<D-v>', '"+P')         -- Paste normal mode
+  vim.keymap.set('v', '<D-v>', '"+P')         -- Paste visual mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+')      -- Paste command mode
+  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
 end
+
+-- vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+
+-- end
 
 -- vim options
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- treesitter based folding
 vim.opt.foldmethod = 'manual'
 vim.opt.iskeyword:append("-")
-vim.opt.mouse = 'a'           --default: 'a'
+vim.opt.mouse = 'nvi'         --default: 'nvi' normal, visual and insert mode
 vim.opt.relativenumber = true --default: false
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -71,29 +85,31 @@ lvim.colorscheme = "tokyonight-night"
 -- }
 
 -- Change theme settings
-lvim.builtin.indentlines = {
-  active = true,
-  on_config_done = nil,
-  options = {
-    enabled = true,
-    buftype_exclude = { "terminal", "nofile" },
-    filetype_exclude = {
-      "help",
-      "startify",
-      "dashboard",
-      "packer",
-      "neogitstatus",
-      "NvimTree",
-      "Trouble",
-      "text",
-    },
-    char = lvim.icons.ui.LineLeft,
-    show_trailing_blankline_indent = false,
-    show_first_indent_level = true,
-    use_treesitter = true,
-    show_current_context = true,
-  },
-}
+-- BUG: This does not seem to have the intended effect
+-- there comment out
+-- lvim.builtin.indentlines = {
+--   active = true,
+--   on_config_done = nil,
+--   options = {
+--     enabled = true,
+--     buftype_exclude = { "terminal", "nofile" },
+--     filetype_exclude = {
+--       "help",
+--       "startify",
+--       "dashboard",
+--       "packer",
+--       "neogitstatus",
+--       "NvimTree",
+--       "Trouble",
+--       "text",
+--     },
+--     char = lvim.icons.ui.LineLeft,
+--     show_trailing_blankline_indent = false,
+--     show_first_indent_level = true,
+--     use_treesitter = true,
+--     show_current_context = true,
+--   },
+-- }
 
 -- lvim.builtin.theme.options.dim_inactive = true
 -- lvim.builtin.theme.options.style = "storm"
@@ -106,7 +122,7 @@ lvim.builtin.which_key.mappings["r"] = {
   f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
 }
 
-lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope fd<CR>", "Find Files" }
+lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope find_files<CR>", "Find Files" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>NvimTreeFocus<CR>", "Focus Explorer" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "Todo and Tabs",
