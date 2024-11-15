@@ -43,4 +43,4 @@ vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'} , {
     end
 })
 
-vim.g.python3_host_prog = '/Users/ENeuhaus/.rye/shims/python'
+vim.g.python3_host_prog = '/Users/ENeuhaus/.venv/bin/python3'
