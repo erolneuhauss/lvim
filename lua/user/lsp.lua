@@ -21,3 +21,16 @@ lvim.lsp.installer.setup.ensure_installed = {
   "tflint",
   "yamlls",
 }
+
+local lspconfig = require("lspconfig")
+
+-- Extend bashls setup to also support zsh files
+lspconfig.bashls.setup {
+  -- Extending the filetypes to include 'zsh'
+  filetypes = { "sh", "bash", "zsh" },
+  on_attach = function(client, bufnr)
+    -- Use LunarVim's default on_attach, if any customization needed
+    require("lvim.lsp").common_on_attach(client, bufnr)
+  end,
+}
+
