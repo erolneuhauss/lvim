@@ -22,6 +22,8 @@ lvim.lsp.installer.setup.ensure_installed = {
   "yamlls",
 }
 
+require("lvim.lsp.manager").setup("marksman")
+
 local lspconfig = require("lspconfig")
 
 -- Extend bashls setup to also support zsh files
